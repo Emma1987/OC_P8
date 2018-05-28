@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\Entity\User;
 
 /**
  * @ORM\Entity
@@ -39,6 +40,13 @@ class Task
      * @ORM\Column(type="boolean")
      */
     private $isDone;
+
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="tasks", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
     public function __construct()
     {
@@ -89,5 +97,30 @@ class Task
     public function toggle($flag)
     {
         $this->isDone = $flag;
+    }
+
+    /**
+     * Set user.
+     *
+     * @param User $user
+     *
+     * @return Task
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+        $user->addTask($this);
+
+        return $this;
+    }
+
+    /**
+     * Get user.
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

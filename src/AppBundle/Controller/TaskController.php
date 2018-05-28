@@ -29,6 +29,7 @@ class TaskController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $task->setUser($this->getUser());
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($task);
@@ -84,6 +85,7 @@ class TaskController extends Controller
     public function deleteTaskAction(Task $task)
     {
         $em = $this->getDoctrine()->getManager();
+        $task->getUser()->removeTask($task);
         $em->remove($task);
         $em->flush();
 
