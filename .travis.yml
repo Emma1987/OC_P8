@@ -9,6 +9,6 @@ env:
   - DB=mysql
 
 script:
-  - if [[ "$DB" == "mysql" ]]; then mysql -e "CREATE DATABASE IF NOT EXISTS ToDoList_tests; GRANT ALL PRIVILEGES ON ToDoList_tests.* to travis@'%'"; fi
+  - if [[ "$DB" == "mysql" ]]; then mysql -e "CREATE DATABASE IF NOT EXISTS ToDoList_tests; GRANT ALL PRIVILEGES ON ToDoList_tests.* to travis@'localhost'"; fi
   - composer install
   - vendor/bin/phpunit
