@@ -40,6 +40,8 @@ class TaskControllerTest extends WebTestCase
 
         $task = $this->entityManager->getRepository('AppBundle:Task')->findByTitle('Un titre de tâche');
         $this->assertCount(1, $task);
+        $this->assertSame($this->user, $task[0]->getUser());
+        $this->assertCount(1, $this->user->getTasks());
     }
 
     public function testEditTask()
