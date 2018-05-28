@@ -22,7 +22,7 @@ doctrine:
         port:     ~
         dbname:   ToDoList_tests
         user:     travis
-        password: root
+        password: 
         charset:  UTF8
 
 security:
