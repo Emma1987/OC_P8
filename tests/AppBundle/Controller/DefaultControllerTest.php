@@ -11,7 +11,7 @@ class DefaultControllerTest extends WebTestCase
 	{
 		parent::setUp();
 		
-		$this->loadUserForTests();
+		$this->loadFixturesForTests();
 	}
 
     public function testIndex()

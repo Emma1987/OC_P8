@@ -18,7 +18,7 @@ class TaskControllerTest extends WebTestCase
             'PHP_AUTH_PW'   => 'pass_1234',
         ));
 
-        $this->loadTaskForTests();
+        $this->loadFixturesForTests();
     }
 
     public function testCreateNewTask()

@@ -11,7 +11,7 @@ class SecurityControllerTest extends WebTestCase
 	{
 		parent::setUp();
 
-        $this->loadUserForTests();
+        $this->loadFixturesForTests();
 	}
 
 	public function testLogin()

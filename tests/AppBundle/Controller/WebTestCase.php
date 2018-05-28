@@ -36,8 +36,9 @@ class WebTestCase extends BaseWebTestCase
             ->getManager();
     }
 
-    public function loadUserForTests()
+    public function loadFixturesForTests()
     {
+        $this->entityManager->createQuery('DELETE AppBundle:Task t')->execute();
         $this->entityManager->createQuery('DELETE AppBundle:User u')->execute();
 
         $user = new User();
@@ -49,24 +50,19 @@ class WebTestCase extends BaseWebTestCase
         $user->setEmail('email@example.com');
 
         $this->entityManager->persist($user);
-        $this->entityManager->flush();
-
-        $this->user = $user;
-    }
-
-    public function loadTaskForTests()
-    {
-        $this->entityManager->createQuery('DELETE AppBundle:Task t')->execute();
 
         $task = new Task();
         $task->setTitle('Un titre de test');
         $task->setContent('Une description');
         $task->setCreatedAt(new \Datetime('2018-05-25 12:00:00'));
         $task->toggle(false);
+        $task->setUser($user);
 
         $this->entityManager->persist($task);
+
         $this->entityManager->flush();
 
+        $this->user = $user;
         $this->task = $task;
     }
 

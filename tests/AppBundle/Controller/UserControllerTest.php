@@ -15,7 +15,7 @@ class UserControllerTest extends WebTestCase
 
         $this->client = static::createClient();
         
-        $this->loadUserForTests();
+        $this->loadFixturesForTests();
     }
 
     public function testCreateNewUser()

@@ -15,8 +15,7 @@ class FirewallTest extends WebTestCase
 
         $this->client = static::createClient();
 
-        $this->loadUserForTests();
-        $this->loadTaskForTests();
+        $this->loadFixturesForTests();
 	}
 
     /**

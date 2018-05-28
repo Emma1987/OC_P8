@@ -1,7 +1,7 @@
 {% extends 'task/create.html.twig' %}
 
 {% block author %}
-	{% if task.user.id == 0 %}
+	{% if task.user.id is not defined %}
         <em>Auteur : Anonyme</em>
     {% else %}
         <em>Publiée par {{ task.user.username }}</em>
