@@ -2,6 +2,8 @@
 
 namespace Tests\AppBundle\Controller;
 
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
 class UserControllerTest extends WebTestCase
 {
     private $client;
@@ -13,7 +15,10 @@ class UserControllerTest extends WebTestCase
     {
         parent::setUp();
 
-        $this->client = static::createClient();
+        $this->client = static::createClient(array(), array(
+            'PHP_AUTH_USER' => 'Admin',
+            'PHP_AUTH_PW'   => 'pass_1234',
+        ));
         
         $this->loadFixturesForTests();
     }
@@ -53,6 +58,18 @@ class UserControllerTest extends WebTestCase
 
         $this->entityManager->refresh($this->user);
         $this->assertSame('NewUsername', $this->user->getUsername());
+    }
+
+    public function testUserRouteNotAccessibleToRoleUser()
+    {
+        $client = static::createClient(array(), array(
+            'PHP_AUTH_USER' => 'Username',
+            'PHP_AUTH_PW'   => 'pass_1234',
+        ));
+
+        $crawler = $client->request('GET', '/users');
+
+        $this->assertSame(403, $client->getResponse()->getStatusCode());
     }
 
     /**

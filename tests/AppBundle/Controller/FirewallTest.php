@@ -18,38 +18,22 @@ class FirewallTest extends WebTestCase
         $this->loadFixturesForTests();
 	}
 
-    /**
-     * @dataProvider urlWithRoleAnonymousProvider
-     */
-    public function testRoutesWhichNeedRoleAnonymousAreNotRedirected($url)
+    // ROUTES ACCESSIBLES TO ANONYMOUS
+    
+    public function testLoginRouteIsAccessibleToAnonymous()
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', $url);
+        $crawler = $client->request('GET', '/login');
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-    public function urlWithRoleAnonymousProvider()
-    {
-        return [
-            ['/login'],
-            ['/users'],
-            ['/users/create']
-        ];
-    }
-
-    public function testUserEditRouteIsNotRedirected()
-    {
-        $client = static::createClient();
-
-        $crawler = $client->request('GET', '/users/'.$this->user->getId().'/edit');
-        $this->assertTrue($client->getResponse()->isSuccessful());
-    }
+    // ROUTES ACCESSIBLE TO ROLE USER
 
     /**
      * @dataProvider urlWithRoleUserProvider
      */
-    public function testRoutesRequiringAuthentication($url)
+    public function testRoutesRequiringRoleUser($url)
     {
         $client = static::createClient();
 
@@ -88,6 +72,19 @@ class FirewallTest extends WebTestCase
 
         $crawler = $client->request('GET', '/tasks/'.$this->task->getId().'/delete');
         $this->assertTrue($client->getResponse()->isRedirect('http://localhost/login'));
+    }
+
+    // ROUTES ACCESSIBLE TO ROLE ADMIN
+    
+    public function testUserEditRouteIsAccessibleToRoleAdmin()
+    {
+        $client = static::createClient(array(), array(
+            'PHP_AUTH_USER' => 'Admin',
+            'PHP_AUTH_PW'   => 'pass_1234',
+        ));
+
+        $crawler = $client->request('GET', '/users/'.$this->user->getId().'/edit');
+        $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
 	/**
