@@ -25,3 +25,7 @@ Symfony 3.1 - PHP framework
 ## Add-ons
 [PHP Unit](https://github.com/sebastianbergmann/phpunit) to run tests  
 [PHP Code Sniffer](https://github.com/squizlabs/PHP_CodeSniffer) to respect PSR 1 & 2  
+
+## More
+You can check the [Authentication documentation](https://github.com/Emma1987/OC_P8/blob/Docs/Authentication.md)  
+You can also [Contribute to this project](https://github.com/Emma1987/OC_P8/blob/Docs/Contributing.md)
