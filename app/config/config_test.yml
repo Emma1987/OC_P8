@@ -14,3 +14,18 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
+
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     127.0.0.1
+        port:     ~
+        dbname:   ToDoList_tests
+        user:     travis
+        password: 
+        charset:  UTF8
+
+security:
+    firewalls:
+        main:
+            http_basic: ~

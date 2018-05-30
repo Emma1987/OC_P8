@@ -29,6 +29,7 @@ class TaskController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $task->setUser($this->getUser());
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($task);
@@ -83,6 +84,11 @@ class TaskController extends Controller
      */
     public function deleteTaskAction(Task $task)
     {
+        if (($task->getUser() !== null && $task->getUser() !== $this->getUser()) || 
+            ($task->getUser() === null && !$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))) {
+            throw $this->createAccessDeniedException('You cannot access this page!');
+        }
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($task);
         $em->flush();
