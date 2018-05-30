@@ -90,6 +90,11 @@ class TaskController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
+
+        if ($task->getUser()){
+            $this->getUser()->removeTask($task);
+        }
+        
         $em->remove($task);
         $em->flush();
 
