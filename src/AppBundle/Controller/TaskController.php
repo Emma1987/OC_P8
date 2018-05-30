@@ -84,8 +84,12 @@ class TaskController extends Controller
      */
     public function deleteTaskAction(Task $task)
     {
+        if (($task->getUser() !== null && $task->getUser() !== $this->getUser()) || 
+            ($task->getUser() === null && !$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))) {
+            throw $this->createAccessDeniedException('You cannot access this page!');
+        }
+
         $em = $this->getDoctrine()->getManager();
-        $task->getUser()->removeTask($task);
         $em->remove($task);
         $em->flush();
 
