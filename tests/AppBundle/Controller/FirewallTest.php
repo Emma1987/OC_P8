@@ -31,60 +31,54 @@ class FirewallTest extends WebTestCase
     // ROUTES ACCESSIBLE TO ROLE USER
 
     /**
-     * @dataProvider urlWithRoleUserProvider
+     * @dataProvider urlRequiringAuthenticationProvider
      */
-    public function testRoutesRequiringRoleUser($url)
+    public function testRoutesRequiringAuthentication($url)
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', $url);
+        $crawler = $client->request('GET', sprintf($url, $this->task->getId()));
         $this->assertTrue($client->getResponse()->isRedirect('http://localhost/login'));
     }
 
-    public function urlWithRoleUserProvider()
+    public function urlRequiringAuthenticationProvider()
     {
         return [
             ['/'],
             ['/tasks'],
-            ['/tasks/create']
+            ['/tasks/create'],
+            ['/tasks/%d/edit'],
+            ['/tasks/%d/toggle'],
+            ['/tasks/%d/delete'],
+            ['/users'],
+            ['/users/create'],
+            ['/users/%d/edit']
         ];
-    }
-
-    public function testEditTaskRouteIsRedirected()
-    {
-        $client = static::createClient();
-
-        $crawler = $client->request('GET', '/tasks/'.$this->task->getId().'/edit');
-        $this->assertTrue($client->getResponse()->isRedirect('http://localhost/login'));
-    }
-
-    public function testToggleTaskRouteIsRedirected()
-    {
-        $client = static::createClient();
-
-        $crawler = $client->request('GET', '/tasks/'.$this->task->getId().'/toggle');
-        $this->assertTrue($client->getResponse()->isRedirect('http://localhost/login'));
-    }
-
-    public function testDeleteTaskRouteIsRedirected()
-    {
-        $client = static::createClient();
-
-        $crawler = $client->request('GET', '/tasks/'.$this->task->getId().'/delete');
-        $this->assertTrue($client->getResponse()->isRedirect('http://localhost/login'));
     }
 
     // ROUTES ACCESSIBLE TO ROLE ADMIN
     
-    public function testUserEditRouteIsAccessibleToRoleAdmin()
+    /**
+     * @dataProvider urlWithRoleAdminProvider
+     */
+    public function testRoutesRequiringRoleAdmin($url)
     {
         $client = static::createClient(array(), array(
-            'PHP_AUTH_USER' => 'Admin',
+            'PHP_AUTH_USER' => 'Username',
             'PHP_AUTH_PW'   => 'pass_1234',
         ));
 
-        $crawler = $client->request('GET', '/users/'.$this->user->getId().'/edit');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        $crawler = $client->request('GET', sprintf($url, $this->task->getId()));
+        $this->assertSame(403, $client->getResponse()->getStatusCode());
+    }
+
+    public function urlWithRoleAdminProvider()
+    {
+        return [
+            ['/users'],
+            ['/users/create'],
+            ['/users/%d/edit']
+        ];
     }
 
 	/**
