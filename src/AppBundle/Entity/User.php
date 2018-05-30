@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
+use AppBundle\Entity\Task;
 
 /**
  * @ORM\Table("user")
@@ -38,6 +40,17 @@ class User implements UserInterface
      * @Assert\Email(message="Le format de l'adresse n'est pas correcte.")
      */
     private $email;
+
+    /**
+     * @var Task[]|Collection
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Task", mappedBy="user")
+     */
+    private $tasks;
+
+    public function __construct()
+    {
+        $this->tasks = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -86,5 +99,41 @@ class User implements UserInterface
 
     public function eraseCredentials()
     {
+    }
+
+    /**
+     * Add task.
+     *
+     * @param Task $task
+     *
+     * @return User
+     */
+    public function addTask(Task $task)
+    {
+        $this->tasks[] = $task;
+
+        return $this;
+    }
+
+    /**
+     * Remove task.
+     *
+     * @param Task $task
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeTask(Task $task)
+    {
+        return $this->tasks->removeElement($task);
+    }
+
+    /**
+     * Get tasks.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTasks()
+    {
+        return $this->tasks;
     }
 }

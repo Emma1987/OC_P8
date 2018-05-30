@@ -1,7 +1,16 @@
+dist: trusty
+sudo: false
 language: php
+
 php:
-  - '7.1'
+  - 7.2
+
+env:
+  - DB=mysql
 
 script:
-   - composer install
-   - vendor/bin/phpunit
+  - if [[ "$DB" == "mysql" ]]; then mysql -e "CREATE DATABASE IF NOT EXISTS ToDoList_tests; GRANT ALL PRIVILEGES ON ToDoList_tests.* to travis@'localhost'"; fi
+  - composer install
+  - php bin/console doctrine:schema:update --force --env=test
+  - vendor/bin/phpunit
+
