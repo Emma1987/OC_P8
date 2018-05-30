@@ -22,12 +22,12 @@ If it is ok, you can submit a pull request, and wait for it to be accepted by th
 
 ## Code of conducts
 
-Using welcoming and inclusive language
-Being respectful of differing viewpoints and experiences
-Gracefully accepting constructive criticism
-Focusing on what is best for the community
+Using welcoming and inclusive language  
+Being respectful of differing viewpoints and experiences  
+Gracefully accepting constructive criticism  
+Focusing on what is best for the community  
 
-We respect some PSR rules, please respect PSR-1, PSR-2 and PSR-4. You can use `vendor/bin/phpcs` to check it.
+We respect some PSR rules, please respect PSR-1, PSR-2 and PSR-4. You can use `vendor/bin/phpcs` to check it.  
 This application is developped with Symfony framework, please check the [Best Practises](https://symfony.com/doc/3.1/best_practices/index.html)
 
 Thanks ♥
