@@ -86,6 +86,18 @@ class TaskControllerTest extends WebTestCase
         $this->assertNull($this->entityManager->getRepository('AppBundle:Task')->find($taskId));
     }
 
+    public function testDeleteTaskBySomeoneWhoIsNotTheAuthor()
+    {
+        $client = static::createClient(array(), array(
+            'PHP_AUTH_USER' => 'Admin',
+            'PHP_AUTH_PW'   => 'pass_1234',
+        ));
+
+        $crawler = $client->request('GET', '/tasks/'.$this->task->getId().'/delete');
+
+        $this->assertSame(403, $client->getResponse()->getStatusCode());
+    }
+
     /**
      * {@inheritDoc}
      */
