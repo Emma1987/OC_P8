@@ -29,10 +29,11 @@ class TaskController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $task->setUser($this->getUser());
+            $entityManager = $this->getDoctrine()->getManager();
 
-            $em->persist($task);
-            $em->flush();
+            $entityManager->persist($task);
+            $entityManager->flush();
 
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
 
@@ -83,9 +84,19 @@ class TaskController extends Controller
      */
     public function deleteTaskAction(Task $task)
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($task);
-        $em->flush();
+        if (($task->getUser() !== null && $task->getUser() !== $this->getUser()) || 
+            ($task->getUser() === null && !$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))) {
+            throw $this->createAccessDeniedException('You cannot access this page!');
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        if ($task->getUser()){
+            $this->getUser()->removeTask($task);
+        }
+
+        $entityManager->remove($task);
+        $entityManager->flush();
 
         $this->addFlash('success', 'La tâche a bien été supprimée.');
 
