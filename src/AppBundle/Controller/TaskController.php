@@ -30,10 +30,10 @@ class TaskController extends Controller
 
         if ($form->isValid()) {
             $task->setUser($this->getUser());
-            $em = $this->getDoctrine()->getManager();
+            $entityManager = $this->getDoctrine()->getManager();
 
-            $em->persist($task);
-            $em->flush();
+            $entityManager->persist($task);
+            $entityManager->flush();
 
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
 
@@ -89,14 +89,14 @@ class TaskController extends Controller
             throw $this->createAccessDeniedException('You cannot access this page!');
         }
 
-        $em = $this->getDoctrine()->getManager();
+        $entityManager = $this->getDoctrine()->getManager();
 
         if ($task->getUser()){
             $this->getUser()->removeTask($task);
         }
-        
-        $em->remove($task);
-        $em->flush();
+
+        $entityManager->remove($task);
+        $entityManager->flush();
 
         $this->addFlash('success', 'La tâche a bien été supprimée.');
 
