@@ -12,12 +12,12 @@ class TaskType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title',		TextType::class, array(
+            ->add('title',      TextType::class, array(
                 'error_bubbling' => true))
-            ->add('content', 	TextareaType::class, array(
+            ->add('content',    TextareaType::class, array(
                 'error_bubbling' => true,
                 'attr'           => array(
-                    'rows'         => 5)))
-        ;
+                    'rows'         => 5)
+        ));
     }
 }

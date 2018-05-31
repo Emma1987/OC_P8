@@ -91,7 +91,7 @@ class TaskController extends Controller
 
         $entityManager = $this->getDoctrine()->getManager();
 
-        if ($task->getUser()){
+        if ($task->getUser()) {
             $this->getUser()->removeTask($task);
         }
 
