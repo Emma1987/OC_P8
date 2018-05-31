@@ -1,7 +1,7 @@
 ToDoList
 ========
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6188c936cc054215a7336e6ac3d88ab5)](https://www.codacy.com/app/Emma1987/OC_P8?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Emma1987/OC_P8&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6188c936cc054215a7336e6ac3d88ab5)](https://www.codacy.com/app/Emma1987/OC_P8?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Emma1987/OC_P8&amp;utm_campaign=Badge_Grade) [![Build Status](https://travis-ci.com/Emma1987/OC_P8.svg?branch=master)](https://travis-ci.com/Emma1987/OC_P8)
 
 
 Test an existing application: ToDo & Co.  
