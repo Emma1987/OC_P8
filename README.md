@@ -1,6 +1,9 @@
 ToDoList
 ========
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6188c936cc054215a7336e6ac3d88ab5)](https://www.codacy.com/app/Emma1987/OC_P8?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Emma1987/OC_P8&amp;utm_campaign=Badge_Grade)
+
+
 Test an existing application: ToDo & Co.  
 
 ## Getting Started
