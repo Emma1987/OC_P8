@@ -61,7 +61,7 @@ class TaskControllerTest extends WebTestCase
         $this->assertSame('Ce titre a été modifié', $this->task->getTitle());
     }
 
-    public function testToggleTask()
+    public function testToggleDoneTask()
     {
         $crawler = $this->client->request('GET', '/tasks/'.$this->task->getId().'/toggle');
         $crawler = $this->client->followRedirect();
@@ -71,6 +71,21 @@ class TaskControllerTest extends WebTestCase
 
         $this->entityManager->refresh($this->task);
         $this->assertTrue($this->task->isDone());
+    }
+
+    public function testToggleUndoneTask()
+    {
+        $this->task->toggle(!$this->task->isDone());
+        $this->entityManager->flush($this->task);
+
+        $crawler = $this->client->request('GET', '/tasks/'.$this->task->getId().'/toggle');
+        $crawler = $this->client->followRedirect();
+
+        $successMessage = 'Superbe ! La tâche '.$this->task->getTitle().' a bien été marquée comme non terminée.'; 
+        $this->assertContains($successMessage, $crawler->filter('div.alert-success')->text());
+
+        $this->entityManager->refresh($this->task);
+        $this->assertTrue(!$this->task->isDone());
     }
 
     public function testDeleteTask()
