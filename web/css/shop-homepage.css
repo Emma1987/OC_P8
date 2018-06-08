@@ -22,8 +22,8 @@ body {
 }
 
 .caption {
-    height: 130px;
-    overflow: hidden;
+    height: 150px;
+    overflow: scroll;
 }
 
 .caption h4 {
@@ -42,6 +42,7 @@ body {
 
 .thumbnail {
     padding: 0;
+    margin: 10px 0;
 }
 
 .thumbnail .caption-full {
@@ -51,4 +52,8 @@ body {
 
 footer {
     margin: 50px 0;
+}
+
+.btnNav {
+    margin-bottom: 10px;
 }
