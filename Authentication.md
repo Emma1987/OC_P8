@@ -9,7 +9,7 @@ The authorization will determine if a visitor has the right to access certain re
 ## Define our users.
 
 The users of our application are represented by the AppBundle: User class, which implements the UserInterface. These are Doctrine entities, represented by the username attribute.  
-This information is defined in the file app/config/config.yml under the key `providers`.
+This information is defined in the file app/config/security.yml under the key `providers`.
 
 To encrypt the password of our users in our database, we must define in the security file the encoder that will be used. It is found under the key `encoders`, in our case, we use the bcrypt encoder.
 
@@ -24,7 +24,7 @@ By default, Symfony security is used to define whether a user is authenticated. 
 `IS_AUTHENTICATED_REMEMBERED`: authenticated users, even those authenticated by the "Remember me" function,  
 `IS_AUTHENTICATED_FULLY`: authenticated users during the current session.
 
-These attributes can be used in the config.yml file to secure url patterns via the `access_control` key.  
+These attributes can be used in the security.yml file to secure url patterns via the `access_control` key.  
 It is also possible to use these attributes in a controller, via the `$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')` method or from a Twig view `{% if is_granted ('IS_AUTHENTICATED_FULLY')%}`
 
 ## Assign rights to users
